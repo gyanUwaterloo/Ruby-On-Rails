@@ -1,0 +1,26 @@
+#this takes in an ERB file and the outputs html file
+#two template notations can be used:
+#1. <% Code %> => Code iside is processed but not rendered
+#2. <%= Code %> => Code is computed and rendered
+ 
+#computes the value of x
+<% x = 2+ 2 %>
+<br/>
+#prints the value of x
+<%= x %>
+
+<% tasks = ['a','b','c']%>
+<% 
+tasks.each do |task|
+    #Ruby command to ouput sth to stdout
+    puts task
+end 
+#ruby return the whole array at the end   
+%>
+
+#To display this list in the HTML we use
+<ul>
+<% tasks.each |task|%>
+    <li> <%= task %> <li>
+<% end %>
+</ul>     

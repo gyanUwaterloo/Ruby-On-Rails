@@ -1,0 +1,212 @@
+{
+    "ROR: file Structure":[
+        {
+            "create project": [
+                  "Change directory to location of project",
+                  "rails new projectName --d mysql",
+                  "rails new --help",
+                  "cd projectName",
+                  "Bundle install: Downloads all files and bundels them"  
+            ],
+            "Project Skeleton":{
+                "app":{
+                    "assets":"Site images and styling styleshhets",
+                    "channels":"",
+                    "controllers":"",
+                    "helpers":"",
+                    "javascript":"js files",
+                    "jobs":"",
+                    "mailers":"",
+                    "models":"",
+                    "views":""
+                },
+                "bin":[],
+                "config":[
+                    "How can we connect with our Database",
+                    {
+                        "Configuring Develpment database at start":[
+                            "Open config/database.yml",
+                            "Add db username and pass",
+                            "from commandline run rails db:create"
+                        ]
+                    },
+                    {
+                        "How to configure routes.rb file for Routing":[
+
+                        ]
+                    },
+                    {
+                        "Envirionments":[
+                            "3 different working envirionment in rails",
+                            "1. Working in deveopment mode",
+                            "2. One for running Automated software tests",
+                            "3. One for production",
+                            "All other settings inherit from the default setting and can be overridden",
+                            "Defaullt database names convention: projectName_{development, test or prod} ",
+                            "rails db:create -> creates dev and test databases, It could also be created manually"
+                        ]
+                    }
+
+                ],
+                "lib":[],
+                "db":[
+                    "Code for making changes to the database"
+                ],
+                "log":[],
+                "public":[],
+                "storage":[],
+                "test":[],
+                "vendor":[]
+            }
+        }
+    ],
+    "Accesing project from Browser":[
+        "ROR runs a simple web server named PUMA",
+        "Launch server using: Rails server or rails s",
+        "ctrl-c to stop web server",
+        "use url localhost:3000 to acces the webserver"
+    ],
+    "Generating Controller":[
+        "Command line >rails generate controller controllerName actions",
+        "actions are optional",
+        "Ex: rails generate controller Tasks index new edit : Views of index new and edit are created",
+        "We should create separate controller for each management area",
+        
+    ],
+    "Generating View":[
+        "the views contains the files that are created while creating the controller",
+        "files such as index.html.erb inside the Tasks subfolder, should be created in the views based on our previous command"
+    ],
+    "Generating route":[
+        "The controller generate command also creates a route",
+        "get Tasks/index is added to route as well : in config/routes.rb file"
+    ],
+    "How do rails routing Work?":[
+        "There are several types of routes: Match Routes, Root Route, Resourceful routes...etc",
+        "While creating a controller it creates match route for us",
+        "it maps the matching string'tasks/index' to 'tasks#index', via :: get",
+        "If string in url dowes not match the string we ccan use longer version",
+        "match tasks/:id : is more dynamic : setting up variable to segment of url",
+        "root route: shorthand for setting home page of application",
+        "Ex: root instead of get => root 'task#index' : it has # instead of /",
+        "you can also use render(page) inside the route to configure it",
+        {
+            "Redirecing in Rails":[
+                "redirect_to(controller: 'main', action: 'index')",
+                "If redirect is to action in the same controller: use  redirect_to(action: 'index')"
+            ]
+        }
+    ],
+    "Erb: Embedded ruby for templating in html":[
+        "Two erb tags: 1. <% code %> : Ruby code precesses but it will not output the template",
+        "2. <%= code %>: Processed and result outptted to template",
+        "index.html.erb => process ERB file and return HTML file"
+    ],
+    "Variables vs Instance Variables":[
+        "Instance variable are prepended with @ symbol",
+        "Regular variable: only inside action",
+        "Instance: Thoughout controller class and has access to all methods ind=side that class",
+        "Instace varible are also available to the template"
+    ],
+    "Helper methods to create Links in webpages":[
+        "{%= link_to(text, target) %}",
+        "Link target can be a string or a map with {controller:'main', action:'display'}",
+        "Link with Parameters",
+        "{%= link_to('link', {controller:'main', action:'index', id: 2, page: 5}) %}",
+        "When the link is clicked you receive value as params",
+        "params are accessible in controllers and views",
+        "params has all get and post values",
+        "params[:id]",
+
+    ],
+    "Databases and Migrations":[
+        "Use ruby on rails migrations: ",
+        "Cmd> rails generate migration MigrationName",
+        "Migrations method: create_table, add_column, remove_column, drop_table, rename_table, rename_colmn",
+        "ColumnTypes: String, integer, text, boolean, decimal, dattime, date, time, binary",
+        "Other way: > rails generate model modelName columns",
+        "Ex: rails generate model Task name:String decription:text position:integer completed:boolean",
+        "In models directory a model is created and a migration file is created db migrate folder",
+        "cmd> rails db:migrate -> it creates the tables",
+        "Other useful commands: rails db:migrate:status > which has run/not run",
+        "> rails db:migrate Version=0 => rools back to the first ever migration",
+        "> rake db:migrate > runs only the ones that were not run or were down",
+
+    ],
+    "models":[
+        "ActiveRecord vs Active relation",
+        "ActiveRecord: Retrive and Manipulate data from db as Objects, not as static rows",
+        "Also, we have information odf update, delete, create and read in these records",
+        "Complex fuctinality as: datavalidation and exception handling is also prenet in this",
+        "It can be manipu;ated and saved with few simple commands",
+
+        "Arel: Active reation: OO intrepretation of relational algebra",
+        "Small queries are chainable",
+        "Complex joins and aggregations become more efficient",
+        "Queries wont execute until needed",
+        "ex:  users= User.where(first_name='kevin')",
+        "users = users.order('last_name asc').limit(5)",
+        "Complex queries are chained and not executed until required, thus motre eeficient",
+        "users.each {|user|...} loop through users in set to perform operation",
+    ],
+    "Using Rails console":[
+        "We can use> rails console -e development > to access development console of rails",
+        "Its the interactive ruby console(IRB) , but with addition of rails project loaded in ",
+        "use exit or reload() to reset the command line",
+        "Query records: Task.where('completed= false  and position < 10')",
+        "Task.where(['first_name like ?', @query]) => this prevents sql injection",
+        "Primar key finder: Task.find(2) : Use it when you know it exxists",
+        "Group query=> Hash method: Task.where(completed:first)",
+        "Group Query String Method => Task.where('completer:true and position< 10')",
+        "Avaoid dropping Values into string using string interpolation to prevent sql injections"
+        ,"Ex: DOn't use something like : Task.where('first_name like #{@query}') ",
+        "Instead use an Array with a replacement 2nd placeholder, Ruby will sanitize the value before insertion",
+        "Ex. Task.where(['first_name like ?',@query ])",
+        "Returning Single Obkect: .first() at end",
+        ".find_by(visible:true) => handy shortcut to return the first non null value",
+        "order, limit,offset, => other commands"
+    ],
+    "Relation and Associations":[
+        "One to many: use foreign key of the one in many table",
+        "Defining Relatinships in Tables and models",
+        ">rails g model Category name:string => SImple model with one column",
+        "Now we add mighraion : > rails g migration AddCategoryIdToTasks ",
+        "Now this migration file can be populatd with the chnages to signify the relation between task and category",
+        "def change => add_column(:tasks, :category_id, :integer, index:true)",
+        "Use > rails db:migrate , to make the down migrations up",
+        "Now we come to models and add that relationship to our models",
+        "tasks.rb > Task> belongs_to :category, optional:true",
+        "Category,rb > Category> has_many: tasks",
+        "Adding rows use append operator: category.tasks << task1"
+
+    ],
+    "Resorceful routes":[
+        "CRUD: create, read, update, delete",
+        "create=> [new, cerate], read=> [index,show], update=> [edit, update], delete=>[delete, destroy] ",
+        "Each controlelr is a resource, with actions being perfomrd on it",
+        "Singular names for models, plural names for controllers",
+        "Process of creating CRUD: defining in consistent way and the modify the controller accrdingly",
+        "Ex: Category Controller: > rails g controller Categories index show  new edit delete create update, destroy",
+        "Now in views > categories > we get all templated.html.erb files created for us",
+        "In routes file we need to check on the paths to these controllers and actions that we need to edit",
+        "Example if we want to use post instead of get> we define them here in routes",
+    ],
+    "Rest: Represenatational State transfer":[
+        "Instead of procedures we perform state transformations on resources",
+        "It provides more structure by providing more http verbs",
+        "Get, Post, Patch,Delete",
+        "Get: /tasks, /tasks/:id, /tasks/new=> get new task form, Post : /tasks",
+        "We can define resource and then split it into separate files",
+        "In config => router.rb => resource:tasks, except:[:show], resource:categories, only [:index, :show]",
+        "We can also configure resource routes for specifics ",
+        "Ex; resources:tasks do => member do=> get:delete end, colllection do=> get:export end"
+    ],
+    "Helpers: resorceful URLS":[
+        "Generaly we use: {controller: 'task', action:'show', id:5}",
+        "Same thing can be written as: task_path(5)"
+    ]
+
+    
+    
+}
+
